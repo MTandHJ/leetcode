@@ -2,7 +2,8 @@
 350. 两个数组的交集 II
 给定两个数组，编写一个函数来计算它们的交集。
 """
-
+import collections
+from typing import List
 class Solution:
     def intersect(self, nums1: List[int], nums2: List[int]) -> List[int]:
 
@@ -66,3 +67,38 @@ class Solution:
 # 链接：https://leetcode-cn.com/problems/intersection-of-two-arrays-ii/solution/ha-xi-biao-liang-ge-shu-zu-de-jiao-ji-ii-fkwo/
 # 来源：力扣（LeetCode）
 # 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+# 评论区学习来的
+class Solution:
+    def intersect(self, nums1: List[int], nums2: List[int]) -> List[int]:
+        count1 = collections.Counter(nums1)
+        count2 = collections.Counter(nums2)
+        nums = count1 & count2
+        # 求COunter的交集
+        return nums.elements()
+
+
+
+class Solution:
+    def intersect(self, nums1: List[int], nums2: List[int]) -> List[int]:
+        # 按照顺序排列
+        if len(nums1) > len(nums2):
+            return self.intersect(nums2, nums1)
+        
+        # 先找到nums1中的元素
+        m = collections.Counter()
+        for num in nums1:
+            m[num] += 1
+        
+        # 交集用列表来表示
+        intersection = list()
+        for num in nums2:
+            # 如果在原来的中有nums2中的元素
+            if (count := m.get(num, 0)) > 0:
+                intersection.append(num)
+                # 删除这个元素
+                m[num] -= 1
+                if m[num] == 0:
+                    m.pop(num)
+        
+        return intersection
