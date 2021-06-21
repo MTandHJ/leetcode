@@ -59,3 +59,84 @@ class Solution:
                     max_len = j - i + 1
                     begin = i
         return s[begin:begin + max_len]
+
+class Solution:
+    def longestPalindrome(self, s:str) -> bool:
+        # 边界条件
+        n = len(s)
+        if n < 2:
+            return True
+        
+        max_len = 1
+        begin = 0
+        dp = [[False]*n for _ in range(n)]
+        for i in range(n):
+            dp[i][i] = True
+        
+        # 长度
+        for L in range(2, n+1):
+            # 起始：左边界
+            for i in range(n):
+                # 右边界
+                j = L + i - 1
+                # 不能超过s的右边界
+                if j >= n:
+                    break
+                # 左边界 ！= 右边界
+                # 这就不可能是回文字符串
+                if s[i] != s[j]:
+                    dp[i][j] = False
+                else:
+                    # 包含长度为3的情况
+                    # 长度比较短的
+                    if j - i < 3:
+                        dp[i][j] = True
+                    else:
+                        # 长度比较长的
+                        dp[i][j] = dp[i+1][j-1]
+                # 在每个循环中
+                # 更新长度
+                # 更新起点（左边界）
+                if dp[i][j] and j - i + 1 > max_len:
+                    max_len = j - i + 1
+                    begin = i
+            
+        return s[begin: begin + max_len]
+
+class Solution:
+    def longestPalindrome(self, s:str) -> str:
+        n = len(s)
+        if n < 2:
+            return s
+        
+        begin = 0
+        max_len = 1
+
+        dp = [[False]*n for _ in range(n)]
+        for i in range(n):
+            dp[i][i] = True
+        
+        for L in range(2, n+1):
+            for i in range(n):
+                j = L + i - 1
+                if j >= n:
+                    break
+                
+                if s[i] != s[j]:
+                    dp[i][j] = False
+                else:
+                    if j - i < 3:
+                        dp[i][j] = True
+                    else:
+                        dp[i][j] = dp[i+1][j-1]
+                
+                if dp[i][j] and j - i + 1 > max_len:
+                    max_len = j - i + 1
+                    begin = i
+            
+        return s[begin:begin + max_len]
+
+if __name__ == "__main__":
+    ins = Solution()
+    s = 'abababa'
+    print(ins.longestPalindrome(s))
