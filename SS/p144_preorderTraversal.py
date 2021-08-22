@@ -2,7 +2,7 @@
 
 # record: June 22, 2021. 10:43
 
-from typing import List
+from typing import Collection, List
 class TreeNode:
     def __init__(self, val=0, left=None, right=None) -> None:
         self.val = val
@@ -57,6 +57,7 @@ class Solution:
         
         return res
 
+
 class Solution:
     def preorderTraversal(self, root:TreeNode) -> List[int]:
         res = []
@@ -81,6 +82,41 @@ class Solution:
             p1 = p1.right
 
         return res
+
+
+class Solution:
+    def preorderTraversal(self, root:TreeNode) -> List[int]:
+        def preorder(root: TreeNode) -> List[int]:
+            if not root:
+                return
+            res.append(root.val)
+            preorder(root.left)
+            preorder(root.right)
+        
+        res = list()
+        preorder(root)
+        return res
+
+
+# from collections import deque
+class Solution:
+    def preorderTraversal(self, root:TreeNode) -> List[int]:
+        if not root:
+            return
+        
+        res = []
+        stack = []
+        node = root
+        while stack or node:
+            while node:
+                res.append(node.val)
+                stack.append(node)
+                node = node.left
+            node = stack.pop()
+            node = node.right
+
+        return res
+
 
 if __name__ == "__main__":
     ins = Solution()
