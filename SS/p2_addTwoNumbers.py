@@ -1,34 +1,31 @@
 
 
 from typing import List
-
-
 class ListNode:
-    def __init__(self, val=0, next=None) -> None:
+    def __init__(self, val, next=None) -> None:
         self.val = val 
         self.next = next
 
 class Solution:
-    def addTwoNumbers(l1:ListNode, l2: ListNode) -> ListNode:
-        head, tail = None, None
+    def addTwoNumbers(self, l1:ListNode, l2: ListNode) -> ListNode:
+        pre = ListNode(0)
+        cur = pre
         carry = 0
-        while l1 and l2:
-            n1 = l1.val if l1 else 0
-            n2 = l2.val if l2 else 0
-            sum = n1 + n2 + carry
-            if not head:
-                head = tail = ListNode(sum % 10)
-            else:
-                tail.next = ListNode(sum % 10)
-                tail = tail.next
-            
-            carry = sum / 10
+        while l1 or l2:
+            x = 0 if not l1 else l1.val
+            y = 0 if not l2 else l2.val
+
+            sum = x + y + carry
+
+            carry = sum // 10
+            sum = sum  % 10
+            cur.next = ListNode(sum)
+
             if l1:
-                l1 = l1.next
+              l1 = l1.next
             if l2:
                 l2 = l2.next
 
-        if carry > 0:
-            tail.next = ListNode(carry)
-        
-        return head
+        if carry == 1:
+            cur.next = ListNode(carry)
+        return pre.next  

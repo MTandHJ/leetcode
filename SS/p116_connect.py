@@ -1,3 +1,5 @@
+from collections import deque
+from typing import Collection
 
 
 class Node:
@@ -6,23 +8,22 @@ class Node:
         self.left = left
         self.right = right
         self.next = next
+    
 
 class Solution:
-    def connect(self, root: Node) -> Node:
+    def connect(self, root: 'Node') -> 'Node':
         if not root:
             return root
-
-        que = [root]
-        while que:
-            size = len(que)
+        Q = deque([root])
+        while Q:
+            size = len(Q)
             for i in range(size):
-                node = que.pop(0)
+                node = Q.popleft()
                 if i < size - 1:
-                    node.next = que[0]
-                
+                    node.next = Q[0]
                 if node.left:
-                    que.append(node.left)
+                    Q.append(node.left)
                 if node.right:
-                    que.append(node.right)
-
+                    Q.append(node.right)
+        
         return root
