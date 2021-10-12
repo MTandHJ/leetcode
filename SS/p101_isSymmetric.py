@@ -67,3 +67,49 @@ class Solution:
             queue.append(left.right)
             queue.append(right.left)
         return True
+
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def isSymmetric(self, root: TreeNode) -> bool:
+        '''
+        if not root:
+            return True
+        def helper(l ,r):
+            if not l and not r:
+                return True
+            elif not l or not r or l.val != r.val:
+                return False
+
+            return helper(l.left, r.right) and helper(l.right, r.left)
+        return helper(root.left, root.right)
+        '''
+        que = [root]
+        # 队列
+        while que:
+            next_que = []
+            layer = []
+            # 遍历当前层的队列
+            # 准备下一层的队列
+            for node in que:
+                # 当left或者right为空时,
+                # 还是需要占位置
+                if not node:
+                    layer.append(None)
+                    continue
+                # 先append(node.val) 或者在left和right之后再append也没有关系
+                next_que.append(node.left)
+                next_que.append(node.right)
+                layer.append(node.val)
+            # 判断是否对称
+            # 当前层是否是对称的
+            if layer != layer[::-1]:
+                return False
+            # 继续检查下一层
+            que = next_que
+        return True

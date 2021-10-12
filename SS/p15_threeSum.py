@@ -1,5 +1,5 @@
 
-from typing import List
+from typing import TYPE_CHECKING, List
 class Solution:
     def threeSum(self, nums: List[int]) -> List[List[int]]:
         n = len(nums)
@@ -33,3 +33,18 @@ class Solution:
                     res.append([nums[first], nums[second], nums[third]])
             
         return res
+    
+    def threeSum(self, nums: List[int]):
+        n = len(nums)
+        nums.sort()
+        self.res = list()
+        for first in range(n-1):
+            if first == 0 or nums[first] != nums[first-1]:
+                third = n - 1
+                for second in range(first+1, n):
+                    if second == first + 1 or nums[second] != nums[second-1]:
+                        while nums[first] + nums[second] + nums[third] > 0:
+                            third -= 1
+                        if nums[first] + nums[second] + nums[third] == 0:
+                            return self.res.append([first, second, third])
+        return self.res

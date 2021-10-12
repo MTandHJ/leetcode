@@ -145,3 +145,23 @@ class MyLinkedList:
 #     ins.findRestaurant(list1, list2)
 
 
+def find_num(start=2000, end=3200):
+    res = []
+    # left = 2000 // 7
+    left = (start // 7) * 7
+    while left <= end:
+        cur = left + 7
+        if start <= cur <= end and cur % 5 != 0:
+            res.append(cur)
+        left = cur
+    # return ' '.join(res)
+    return ' '.join([str(val) for val in res])
+
+print(type(find_num()))
+
+
+import time
+start = time.time()
+print(find_num())
+end = time.time()
+print(end-start)
