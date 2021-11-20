@@ -1,5 +1,6 @@
 
 from typing import Callable, List, Tuple, Union
+import sys
 
 def version(annotation: str) -> Callable:
     def decorator(func: Callable) -> Callable:
@@ -9,3 +10,12 @@ def version(annotation: str) -> Callable:
         wrapper.__doc__ = func.__doc__
         return wrapper
     return decorator
+
+
+def main():
+    import sys
+    solver: Callable
+    for line in sys.stdin:
+        flows = line.split()
+        print(solver(*flows))
+    return
