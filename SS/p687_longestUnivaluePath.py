@@ -22,8 +22,11 @@ class Solution:
                 rightPath = right + 1
             else:
                 rightPath = 0
-            path = max(self.path, leftPath + rightPath)
+            self.path = max(self.path, leftPath + rightPath)
             return max(leftPath, rightPath)
+        
+        self.dfs(root)
+        return self.path
 
 class Solution:
     def longestUnivaluePath(self, root: TreeNode) -> int:

@@ -27,6 +27,24 @@ class Solution:
             self.backtrack(nums, res, idx+1, perm)
             self.vis[i] = 0
             perm.pop()
+    
+    def permute2(self, nums):
+        def backtrack(first=0):
+            print(first)
+            if first == n:
+                res.append(nums[:])
+                return 
+            for i in range(n-1):
+                nums[first], nums[i] = nums[i], nums[first]
+                backtrack(first + 1)
+                nums[first], nums[i] = nums[first], nums[i]
+        n = len(nums)
+        res = []
+        backtrack()
+        return res
+
+ins = Solution()
+print(ins.permute2([1, 2, 3]))
         
         
         

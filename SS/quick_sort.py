@@ -3,8 +3,8 @@
 from typing import List
 
 def inplace_sort(S, a, b):
-    if a >- b:
-        return
+    if a >= b:
+            return
 
     pivot = S[b]
     l, r = a, b-1
