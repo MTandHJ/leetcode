@@ -32,9 +32,3 @@ class Solution:
     @version("36ms, 16.7mb")
     def generateTrees(self, n: int) -> List[TreeNode]:
         return self.buildTrees(1, n)
-
-
-
-test = Solution()
-print(test.buildTrees(1, 3))
-
