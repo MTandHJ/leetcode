@@ -35,6 +35,3 @@ class Solution:
                     else:
                         break
             prev = cur
-
-test = Solution()
-print(test.numSquares(12))
