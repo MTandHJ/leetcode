@@ -35,3 +35,29 @@ class Solution:
                     else:
                         break
             prev = cur
+
+    @version("5452ms, 39.2mb")
+    def numSquares(self, n: int) -> int:
+        memory = {1:1, 2:2}
+        def search(n):
+            if memory.get(n, None) is None:
+                sqrtn = n ** 0.5
+                if int(sqrtn) == sqrtn:
+                    memory[n] = 1
+                else:
+                    ans = float('inf')
+                    for i in range(int(sqrtn), 0, -1): # why not for i in range(1, int(sqrtn) + 1): ... ?
+                        ans = min(ans, 1 + search(n - i * i))
+                    memory[n] = ans
+            return memory[n]
+        return search(n)
+    
+    @version("6336ms, 15.2mb")
+    def numSquares(self, n: int) -> int:
+        dps = [0]
+        for i in range(1, n + 1):
+            ans = float('inf')
+            for j in range(int(i ** 0.5), 0, -1):
+                ans = min(ans, 1 + dps[i - j ** 2])
+            dps.append(ans)
+        return dps[-1]
