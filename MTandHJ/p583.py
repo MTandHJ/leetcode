@@ -7,43 +7,30 @@ from base import version
 
 class Solution:
 
-    @version("over time limits")
+    @version("dp: 2008ms, 19.1mb")
     def minDistance(self, word1: str, word2: str) -> int:
-        if word1 == word2:
-            return 0
-        memory = dict()
-        def search(word1, word2, steps):
-            if len(word1) < len(word2):
-                word1, word2 = word2, word1
-            if word2 in memory:
-                return memory[word2]
-            ans = []
-            for i, alpha in enumerate(word1):
-                word = word1[:i] + word1[i+1:]
-                if word == word2:
-                    memory[word] = steps + 1
-                    return memory[word]
+        dp = [[0 for _ in range(len(word2) + 1)] for _ in range(len(word1) + 1)]
+        for i in range(1, len(word1) + 1):
+            for j in range(1, len(word2) + 1):
+                dp[i][j] = dp[i - 1][j - 1]
+                for k in range(j, 0, -1):
+                    if word1[i - 1] == word2[k - 1]:
+                        dp[i][j] = max(dp[i][j], dp[i - 1][k - 1] + 1)
+                        break
+                for k in range(i, 0, -1):
+                    if word1[k - 1] == word2[j - 1]:
+                        dp[i][j] = max(dp[i][j], dp[k - 1][j - 1] + 1)
+                        break
+        return len(word1) + len(word2) - dp[-1][-1] * 2
+
+    @version("dp: 244ms, 17.3mb")
+    def minDistance(self, word1: str, word2: str) -> int:
+        dp = [[0 for _ in range(len(word2) + 1)] for _ in range(len(word1) + 1)]
+        for i in range(1, len(word1) + 1):
+            for j in range(1, len(word2) + 1):
+                if word1[i - 1] == word2[j - 1]:
+                    dp[i][j] = dp[i - 1][j - 1] + 1
                 else:
-                    ans.append(search(word, word2, steps + 1))
-            return min(ans)
-        return search(word1, word2, 0) 
+                    dp[i][j] = max(dp[i - 1][j], dp[i][j - 1])
+        return len(word1) + len(word2) - dp[-1][-1] * 2
 
-
-    def minDistance(self, word1: str, word2: str) -> int:
-        def search(word1, word2):
-            if word1 == word2:
-                return len(word1)
-            if not (len(word1) and len(word2)):
-                return 0
-            if word1[-1] == word2[-1]:
-                return search(word1[:-1], word2[:-1]) + 1
-            else:
-                return max(search(word1, word2[:-1]), search(word1[:-1], word2))
-        return len(word1) + len(word2) - search(word1, word2) * 2
-
-
-    def minDistance(self, word1: str, word2: str) -> int:
-        x, y = 0, 0
-
-test = Solution()
-test.minDistance('sea', 'eat')
